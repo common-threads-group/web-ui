@@ -18,7 +18,7 @@ after_success:
   - sh scripts/build.sh
 
 deploy:
-  skip_cleanup: true
+- skip_cleanup: true
   provider: s3
   access_key_id: AKIAI4WXR4PRA6AJKFYA
   secret_access_key:
@@ -27,10 +27,10 @@ deploy:
   local-dir: dist
   acl: public_read
   verbose: true
-  on: dev
+  on:
+    branch: dev
 
-deploy:
-  skip_cleanup: true
+- skip_cleanup: true
   provider: s3
   access_key_id: AKIAI4WXR4PRA6AJKFYA
   secret_access_key:
@@ -39,4 +39,5 @@ deploy:
   local-dir: dist
   acl: public_read
   verbose: true
-  on: master
+  on:
+    branch: master
