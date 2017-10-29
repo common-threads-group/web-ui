@@ -26,8 +26,8 @@ deploy:
   bucket: waldo-jobs-dev
   local-dir: dist
   acl: public_read
-  on:
-    branch: dev
+  verbose: true
+  on: dev
 
 deploy:
   skip_cleanup: true
@@ -38,5 +38,5 @@ deploy:
   bucket: waldo-jobs
   local-dir: dist
   acl: public_read
-  on:
-    branch: master
+  verbose: true
+  on: master
