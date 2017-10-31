@@ -27,7 +27,8 @@ matrix:
       - android-sdk-preview-license-.+
       - android-sdk-license-.+
       - google-gdk-license-.+
-
+addons:
+  chrome: stable
 env:
   global:
   - JOBS=1
@@ -49,7 +50,7 @@ before_install:
 
 script:
   - sudo npm install -g ember-cli
-  - sudo npm install
+  - sudo yarn install
   - ember test
 
 after_success:
