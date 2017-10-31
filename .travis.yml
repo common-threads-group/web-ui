@@ -1,6 +1,6 @@
-
+os: osx
+osx_image: xcode9
 language: node_js
-sudo: enabled
 node_js:
 - '6'
 sudo: false
