@@ -18,7 +18,7 @@ before_install:
 install:
   - sudo chown -R $USER /usr/local
   - sudo chmod -R 0775 /usr/local
-  - sudo apt-get install npm
+  - sudo nvm install 6
   - sudo npm cache clear
   - sudo npm install -g cordova
   - cordova
