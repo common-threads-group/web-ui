@@ -39,8 +39,8 @@ before_install:
 
 install:
   - yarn global add ionic cordova
-  - npm install -g ember-cli
-  - npm install
+  - sudo npm install -g ember-cli
+  - sudo npm install
 
 after_success:
   - sh scripts/build.sh
