@@ -14,6 +14,7 @@ matrix:
         - extra-google-m2repository
         - extra-android-m2repository
       addons:
+        chrome: stable
         apt:
           sources:
           - sourceline: deb https://dl.yarnpkg.com/debian/ stable main
@@ -27,8 +28,8 @@ matrix:
       - android-sdk-preview-license-.+
       - android-sdk-license-.+
       - google-gdk-license-.+
-addons:
-  chrome: stable
+
+
 env:
   global:
   - JOBS=1
