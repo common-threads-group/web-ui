@@ -46,7 +46,3 @@ cordova/platforms/wp8/*.csproj.user
 #browser
 cordova/platforms/browser/build
 cordova/platforms/browser/www
-
-# cordova
-cordova/node_modules
-cordova/platforms/ios/cordova/node_modules
