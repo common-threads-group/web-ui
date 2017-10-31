@@ -43,6 +43,11 @@ cordova/platforms/wp8/.staging
 cordova/platforms/wp8/*.suo
 cordova/platforms/wp8/*.csproj.user
 
+# cordova
+cordova/platforms/*
+cordova/node_modules/*
+cordova/plugins/*
+
 #browser
 cordova/platforms/browser/build
 cordova/platforms/browser/www
