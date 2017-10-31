@@ -16,7 +16,7 @@ before_install:
 - npm config set spin false
 
 install:
-  - sudo npm install -g cordova
+  - sudo ls
   - cordova
   - npm install -g ember-cli
   - npm install
