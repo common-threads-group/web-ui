@@ -19,6 +19,7 @@ before_install:
 install:
   - npm install -g cordova
   - npm install -g ember-cli
+  - npm install
 
 after_success:
   - sh scripts/build.sh
