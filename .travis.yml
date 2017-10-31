@@ -16,10 +16,10 @@ before_install:
 - npm config set spin false
 
 install:
-  - sudo chown -R $USER /usr/local
-  - sudo chmod -R 0775 /usr/local
+  - sudo chown -R $USER /usr/lib
+  - sudo chmod -R 0775 /usr/lib
   - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-  - sudo apt-get install -y nodejs  
+  - sudo apt-get install -y nodejs
   - sudo npm cache clear
   - sudo npm install -g cordova
   - cordova
