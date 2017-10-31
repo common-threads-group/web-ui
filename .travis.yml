@@ -16,11 +16,7 @@ before_install:
 - npm config set spin false
 
 install:
-  - sudo chmod 777 /usr/lib
-  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-  - sudo apt-get install -y nodejs
-  - sudo npm cache clear
-  - sudo npm install -g cordova
+  - yarn global add ionic cordova
   - cordova
   - npm install -g ember-cli
   - npm install
