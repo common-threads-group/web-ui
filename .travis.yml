@@ -14,9 +14,9 @@ matrix:
         - extra-google-m2repository
         - extra-android-m2repository
       addons:
-        chrome: stable
         apt:
           sources:
+          - google-chrome
           - sourceline: deb https://dl.yarnpkg.com/debian/ stable main
             key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
           packages:
@@ -24,11 +24,11 @@ matrix:
           - oracle-java8-set-default
           - yarn
           - jq
+          - google-chrome-stable
       licenses:
       - android-sdk-preview-license-.+
       - android-sdk-license-.+
       - google-gdk-license-.+
-
 
 env:
   global:
