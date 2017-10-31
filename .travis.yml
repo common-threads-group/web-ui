@@ -44,12 +44,13 @@ before_install:
   - export LANG=en_US.UTF-8
   - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
   - sudo apt-get install -y nodejs
-  - yarn global add ionic cordova
   - sudo chmod 777 /usr/bin
+  - sudo yarn global add ionic cordova
 
 script:
   - sudo npm install -g ember-cli
   - sudo npm install
+  - ember test
 
 after_success:
   - sh scripts/build.sh
