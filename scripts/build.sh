@@ -1,7 +1,7 @@
 #!/bin/sh
-cd cordova;
+pushd cordova;
 cordova platform add ios;
-cd ..;
+popd;
 
 if [ $TRAVIS_BRANCH = 'master' ]; then
   sudo ember cordova:build --environment=production;
