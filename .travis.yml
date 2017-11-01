@@ -48,7 +48,7 @@ before_install:
   - sudo apt-get install -y nodejs
   - sudo chmod 777 /usr/bin
   - sudo yarn global add ionic cordova
-  - yes | sudo /usr/local/android-sdk/tools/bin/sdkmanager --licenses
+  # - yes | sudo /usr/local/android-sdk/tools/bin/sdkmanager --licenses
 
 script:
   - sudo npm install -g ember-cli
