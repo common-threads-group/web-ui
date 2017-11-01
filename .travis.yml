@@ -1,9 +1,7 @@
 matrix:
   include:
     - os: osx
-      language: node_js
-      node_js:
-        - '6'
+      language: objective-c
       osx_image: xcode8.3
 
 env:
@@ -20,8 +18,10 @@ cache:
 
 before_install:
   - export LANG=en_US.UTF-8
-  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-  - sudo apt-get install -y nodejs
+  # - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  # - sudo apt-get install -y nodejs
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo brew update ; sudo brew install yarn ios-sim
+    jq ios-deploy cocoapods ; sudo rvm use system ; sudo pod setup ; sudo nvm install 8 ; fi
   - sudo chmod 777 /usr/bin
   - sudo yarn global add ionic cordova
   # - yes | sudo /usr/local/android-sdk/tools/bin/sdkmanager --licenses
