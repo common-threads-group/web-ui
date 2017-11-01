@@ -30,6 +30,7 @@ script:
   - ember test
 
 after_success:
+  - ember cordova:prepare
   - sh scripts/build.sh
 
 # deploy ios app
