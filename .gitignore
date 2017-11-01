@@ -17,3 +17,7 @@ npm-debug.log
 testem.log
 
 # cordova
+cordova/node_modules
+cordova/plugins
+cordova/platforms
+cordova/res
