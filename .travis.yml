@@ -22,7 +22,7 @@ before_install:
   # - sudo apt-get install -y nodejs
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; brew install yarn ios-sim
     jq ios-deploy cocoapods ; rvm use system ; pod setup ; nvm install 8 ; fi
-  - chmod 777 /usr/bin
+  # - chmod 777 /usr/bin
   - yarn global add ionic cordova
   # - yes | sudo /usr/local/android-sdk/tools/bin/sdkmanager --licenses
 
