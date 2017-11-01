@@ -20,15 +20,15 @@ before_install:
   - export LANG=en_US.UTF-8
   # - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
   # - sudo apt-get install -y nodejs
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo brew update ; sudo brew install yarn ios-sim
-    jq ios-deploy cocoapods ; sudo rvm use system ; sudo pod setup ; sudo nvm install 8 ; fi
-  - sudo chmod 777 /usr/bin
-  - sudo yarn global add ionic cordova
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; brew install yarn ios-sim
+    jq ios-deploy cocoapods ; rvm use system ; pod setup ; nvm install 8 ; fi
+  - chmod 777 /usr/bin
+  - yarn global add ionic cordova
   # - yes | sudo /usr/local/android-sdk/tools/bin/sdkmanager --licenses
 
 script:
-  - sudo npm install -g ember-cli
-  - sudo yarn install
+  - npm install -g ember-cli
+  - yarn install
   - ember test
 
 after_success:
