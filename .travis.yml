@@ -1,37 +1,8 @@
 matrix:
   include:
-    - os: linux
-      sudo: required
-      language: android
-      android:
-        components:
-        - tools
-        - platform-tools
-        - tools
-        - build-tools-25.0.0
-        - android-25
-        - extra-google-google_play_services
-        - extra-google-m2repository
-        - extra-android-m2repository
-      addons:
-        apt:
-          sources:
-          - google-chrome
-          - sourceline: deb https://dl.yarnpkg.com/debian/ stable main
-            key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
-          packages:
-          - oracle-java8-installer
-          - oracle-java8-set-default
-          - yarn
-          - jq
-          - google-chrome-stable
-      licenses:
-      - android-googletv-license-.+
-      - google-gdk-license-.+
-      - android-sdk-license-.+
-      - intel-android-extra-license-.+
-      - android-sdk-preview-license-.+
-      - mips-android-sysimage-license-.+
+    - os: osx
+      language: objective-c
+      osx_image: xcode8.3
 
 env:
   global:

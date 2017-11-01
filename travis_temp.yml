@@ -1,29 +1,67 @@
+matrix:
+  include:
+    - os: linux
+      sudo: required
+      language: android
+      android:
+        components:
+        - tools
+        - platform-tools
+        - tools
+        - build-tools-25.0.0
+        - android-25
+        - extra-google-google_play_services
+        - extra-google-m2repository
+        - extra-android-m2repository
+      addons:
+        apt:
+          sources:
+          - google-chrome
+          - sourceline: deb https://dl.yarnpkg.com/debian/ stable main
+            key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
+          packages:
+          - oracle-java8-installer
+          - oracle-java8-set-default
+          - yarn
+          - jq
+          - google-chrome-stable
+      licenses:
+      - android-googletv-license-.+
+      - google-gdk-license-.+
+      - android-sdk-license-.+
+      - intel-android-extra-license-.+
+      - android-sdk-preview-license-.+
+      - mips-android-sysimage-license-.+
 
-language: node_js
-node_js:
-- '6'
-sudo: required
-dist: trusty
-addons:
-  chrome: stable
-cache:
-  directories:
-  - $HOME/.npm
 env:
   global:
   - JOBS=1
-before_install:
-- npm config set spin false
+  - JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
-install:
-  - yarn global add ionic cordova
-  - cordova
-  - npm install -g ember-cli
-  - npm install
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/Library/Caches/Yarn/v1/
+  - $HOME/.cache/yarn/v1/
+
+before_install:
+  - export LANG=en_US.UTF-8
+  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  - sudo apt-get install -y nodejs
+  - sudo chmod 777 /usr/bin
+  - sudo yarn global add ionic cordova
+  # - yes | sudo /usr/local/android-sdk/tools/bin/sdkmanager --licenses
+
+script:
+  - sudo npm install -g ember-cli
+  - sudo yarn install
+  - ember test
 
 after_success:
   - sh scripts/build.sh
 
+# deploy android app
 deploy:
 - skip_cleanup: true
   provider: s3
@@ -31,11 +69,12 @@ deploy:
   secret_access_key:
     secure: Qy8wDoTUlm6AbI2cvgbqyJRLNDP7cmlF08xzHY3ZAOKRCf766u+KqyAPaXO1eeSmrQWCT7RJ1A3WJ5atZP+dGSH+2/u/dUwViZ66vYTv5rwpi1lFJvYcK29oRXtwkQS+dWc6OTVQGTkHBeX0bWBdzkpwJA5aPiTHLD61tait0FJ2jyaKRDhxKGC29Vm/s+fRdNBSNITNEewKOe1hMn41V8Q5W9diPwbb3oGcpCP+vao8MRsEGd2MQWdRmERJkaiD6AFyUweZHRrfY8usg9wXPTgpTO65NC+jNSrHDw271Ux3IEEgPGzC/w5HBpW0JAO7skGhaunf81vjsM6vEMejIPFhovUNiEVKNvxj730P6bcNctnKs2iBZmmpLPPXPX6pjaoSINVWmaxzF+ilhHRRMVyDDTbsuz8KxDQNPtkVI3V9wsxnvoAKrXb4W9+KlLPEe8Fdo3lXRAXmqpHufaZseW8AvybbwBzKPqnxw+qFvWrFjyq5v+2EklPz6Qe3ELF1bXTfgMa2BjXZbOIJeNHa3ySzyGfYhWrnjNLada48o/pFbEQ0WCU9DY2pEKQ/N+Rt4JSX3rNe1eR4mFgjG5wuak1hbGzhqTeY1Gbf8NX+xKnOPcgzBXZco9yWPRCyfbfMcCEcoI/H3WXlxLIuSClP4a6rsm1A0gQB4gDPT8XKRC0=
   bucket: waldo-jobs-dev
-  local-dir: dist
+  local-dir: cordova/platforms/android/build
+  upload-dir: android-build
   acl: public_read
   verbose: true
-  # on:
-  #   branch: dev
+  on:
+    branch: adding-osx
 
 - skip_cleanup: true
   provider: s3
