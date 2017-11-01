@@ -1,5 +1,6 @@
 #!/bin/sh
 pushd cordova;
+npm install;
 cordova platform add ios;
 popd;
 
