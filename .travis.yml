@@ -26,9 +26,12 @@ matrix:
           - jq
           - google-chrome-stable
       licenses:
-      - android-sdk-preview-license-.+
-      - android-sdk-license-.+
+      - android-googletv-license-.+
       - google-gdk-license-.+
+      - android-sdk-license-.+
+      - intel-android-extra-license-.+
+      - android-sdk-preview-license-.+
+      - mips-android-sysimage-license-.+
 
 env:
   global:
