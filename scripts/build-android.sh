@@ -2,10 +2,10 @@
 
 sudo ember cordova:prepare;
 
-pushd cordova;
+cd cordova;
 sudo npm install;
 sudo cordova platform add android;
-popd;
+cd ..;
 
 if [ $TRAVIS_BRANCH = 'master' ]; then
   sudo ember cordova:build --environment=production --platform=android;
