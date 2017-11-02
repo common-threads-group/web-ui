@@ -1,6 +1,8 @@
 #!/bin/sh
-set -e
+
 ember cordova:prepare;
+
+set -e;
 
 pushd cordova;
 npm install;
