@@ -61,7 +61,7 @@ script:
 
 after_success:
   - sh scripts/build-ember-app.sh
-  - if [[ "$TRAVIS_BRANCH" == "master" || "$TRAVIS_BRANCH" == "dev" || "$TRAVIS_BRANCH" == "adding-osx"]]; then
+  - if [[ "$TRAVIS_BRANCH" == "master" || "$TRAVIS_BRANCH" == "dev" || "$TRAVIS_BRANCH" == "adding-osx" ]]; then
       if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh scripts/build-ios.sh; fi;
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh scripts/build-android.sh; fi
     fi
@@ -113,7 +113,6 @@ deploy:
 # ----------------------------------------------
 
 # deploy ios app to develop
-deploy:
 - skip_cleanup: true
   provider: s3
   access_key_id: AKIAI4WXR4PRA6AJKFYA
