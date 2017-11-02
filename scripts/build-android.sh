@@ -1,8 +1,8 @@
 #!/bin/sh
 
-sudo ember cordova:prepare;
+set -e
 
-# set -e
+sudo ember cordova:prepare;
 
 cd cordova;
 sudo npm install;
