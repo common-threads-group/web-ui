@@ -60,8 +60,8 @@ matrix:
       addons:
         apt:
           sources:
-            # - sourceline: deb https://dl.yarnpkg.com/debian/ stable main
-              # key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
+            - sourceline: deb https://dl.yarnpkg.com/debian/ stable main
+              key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
           packages:
             - oracle-java8-installer
             - oracle-java8-set-default
