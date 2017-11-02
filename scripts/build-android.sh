@@ -1,4 +1,7 @@
 #!/bin/sh
+
+sudo ember cordova:prepare;
+
 pushd cordova;
 sudo npm install;
 sudo cordova platform add android;
