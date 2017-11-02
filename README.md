@@ -44,3 +44,17 @@ Make use of the many generators for code, try `ember help generate` for more det
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+
+# Building the cordova app on Travis
+
+This process was extremely painful, so I thought it would be good to document here for future use.
+First, get cordova: `sudo npm install -g cordova`
+
+1) Use the .travis.yml file in this directory
+2) `ember install ember-cli-cordova`
+3) `ember generate cordova-init <name-of-project>`
+4) `rm -rf cordova/platforms` (this will remove the automatic ios platorm from the cordova directory)
+5) add `cordova/platforms/*` to your .gitignore
+6) add `cordova/node_modules/*` to your .gitignore
+7) add `cordova/plugins/*` to your .gitignore
+8) `rm -rf cordova/res` (if you don't want 10 MB of pictures in your project that don't seem to serve a purpose)
