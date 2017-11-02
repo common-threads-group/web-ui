@@ -5,7 +5,7 @@ matrix:
       osx_image: xcode8.3
       addons:
         chrome: stable
-      if: 1=2
+      if: branch = blah
 
     - os: linux
       sudo: required
