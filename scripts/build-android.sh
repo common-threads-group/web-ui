@@ -2,7 +2,7 @@
 
 ember cordova:prepare;
 
-set -e
+# set -e
 
 cd cordova;
 sudo npm install;
