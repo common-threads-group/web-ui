@@ -1,4 +1,7 @@
 #!/bin/sh
+
+ember cordova:prepare;
+
 pushd cordova;
 npm install;
 cordova platform add ios;
