@@ -7,4 +7,6 @@ brew install yarn; #ios-sim jq ios-deploy cocoapods;
 nvm install 8;
 yarn global add ionic cordova;
 npm install -g ember-cli;
+npm install -g bower;
 npm install;
+bower install;
