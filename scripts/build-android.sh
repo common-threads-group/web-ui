@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo ember cordova:prepare;
+ember cordova:prepare;
 
 set -e
 

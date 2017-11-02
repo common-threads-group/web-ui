@@ -48,7 +48,7 @@ matrix:
     ############################# ANDROID BUILD #############################
     - if: (branch = master OR branch = dev OR branch = breaking-up-builds) AND type = push
       os: linux
-      sudo: required
+      sudo: false
       language: android
       android:
         components:
