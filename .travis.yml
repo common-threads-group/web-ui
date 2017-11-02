@@ -46,7 +46,7 @@ matrix:
             condition: $TRAVIS_OS_NAME = osx
 
     ############################# ANDROID BUILD #############################
-    - if: (branch = master OR branch = dev) AND type = push
+    - if: (branch = master OR branch = dev OR branch = breaking-up-builds) AND type = push
       os: linux
       sudo: required
       language: android
