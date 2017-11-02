@@ -6,6 +6,39 @@ matrix:
       addons:
         chrome: stable
 
+    - os: linux
+      sudo: required
+      language: android
+      android:
+        components:
+        - tools
+        - platform-tools
+        - tools
+        - build-tools-25.0.1
+        - android-25
+        - extra-google-google_play_services
+        - extra-google-m2repository
+        - extra-android-m2repository
+      addons:
+        apt:
+          sources:
+          - google-chrome
+          - sourceline: deb https://dl.yarnpkg.com/debian/ stable main
+            key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
+          packages:
+          - oracle-java8-installer
+          - oracle-java8-set-default
+          - yarn
+          - jq
+          - google-chrome-stable
+      licenses:
+      - android-googletv-license-.+
+      - google-gdk-license-.+
+      - android-sdk-license-.+
+      - intel-android-extra-license-.+
+      - android-sdk-preview-license-.+
+      - mips-android-sysimage-license-.+
+
 env:
   global:
   - JOBS=1
@@ -20,20 +53,21 @@ cache:
 
 before_install:
   - export LANG=en_US.UTF-8
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; brew install yarn ios-sim
-    jq ios-deploy cocoapods ; rvm use system ; pod setup ; nvm install 8 ; fi
-  - yarn global add ionic cordova
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh scripts/before-install-osx.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh scripts/before-install-linux.sh; fi
 
 script:
-  - npm install -g ember-cli
-  - npm install
   - ember test
 
 after_success:
+  - sh scripts/build-ember-app.sh
   - ember cordova:prepare
-  - sh scripts/build.sh
+  - if [[ "$TRAVIS_BRANCH" == "master" || "$TRAVIS_BRANCH" == "dev" ]]; then
+      if [[ "$TRAVIS_OS_NAME" == "osx" ]]; sh scripts/build-ios.sh; fi
+      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; sh scripts/build-android.sh; fi
+    ; fi
 
-# deploy ios app
+# deploy ios app to develop
 deploy:
 - skip_cleanup: true
   provider: s3
@@ -46,11 +80,25 @@ deploy:
   acl: public_read
   verbose: true
   on:
-    branch: adding-osx
+    branch: dev
     condition: $TRAVIS_OS_NAME = osx
 
+# deploy android app to develop
+- skip_cleanup: true
+  provider: s3
+  access_key_id: AKIAI4WXR4PRA6AJKFYA
+  secret_access_key:
+    secure: Qy8wDoTUlm6AbI2cvgbqyJRLNDP7cmlF08xzHY3ZAOKRCf766u+KqyAPaXO1eeSmrQWCT7RJ1A3WJ5atZP+dGSH+2/u/dUwViZ66vYTv5rwpi1lFJvYcK29oRXtwkQS+dWc6OTVQGTkHBeX0bWBdzkpwJA5aPiTHLD61tait0FJ2jyaKRDhxKGC29Vm/s+fRdNBSNITNEewKOe1hMn41V8Q5W9diPwbb3oGcpCP+vao8MRsEGd2MQWdRmERJkaiD6AFyUweZHRrfY8usg9wXPTgpTO65NC+jNSrHDw271Ux3IEEgPGzC/w5HBpW0JAO7skGhaunf81vjsM6vEMejIPFhovUNiEVKNvxj730P6bcNctnKs2iBZmmpLPPXPX6pjaoSINVWmaxzF+ilhHRRMVyDDTbsuz8KxDQNPtkVI3V9wsxnvoAKrXb4W9+KlLPEe8Fdo3lXRAXmqpHufaZseW8AvybbwBzKPqnxw+qFvWrFjyq5v+2EklPz6Qe3ELF1bXTfgMa2BjXZbOIJeNHa3ySzyGfYhWrnjNLada48o/pFbEQ0WCU9DY2pEKQ/N+Rt4JSX3rNe1eR4mFgjG5wuak1hbGzhqTeY1Gbf8NX+xKnOPcgzBXZco9yWPRCyfbfMcCEcoI/H3WXlxLIuSClP4a6rsm1A0gQB4gDPT8XKRC0=
+  bucket: waldo-jobs-dev
+  local-dir: cordova/platforms/android/build
+  upload-dir: android-build
+  acl: public_read
+  verbose: true
+  on:
+    branch: dev
+    condition: $TRAVIS_OS_NAME = linux
+
 # deploy ember app to development
-deploy:
 - skip_cleanup: true
   provider: s3
   access_key_id: AKIAI4WXR4PRA6AJKFYA
@@ -61,7 +109,37 @@ deploy:
   acl: public_read
   verbose: true
   on:
-    branch: adding-osx
+    branch: dev
+
+# deploy ios app to master
+- skip_cleanup: true
+  provider: s3
+  access_key_id: AKIAI4WXR4PRA6AJKFYA
+  secret_access_key:
+    secure: Qy8wDoTUlm6AbI2cvgbqyJRLNDP7cmlF08xzHY3ZAOKRCf766u+KqyAPaXO1eeSmrQWCT7RJ1A3WJ5atZP+dGSH+2/u/dUwViZ66vYTv5rwpi1lFJvYcK29oRXtwkQS+dWc6OTVQGTkHBeX0bWBdzkpwJA5aPiTHLD61tait0FJ2jyaKRDhxKGC29Vm/s+fRdNBSNITNEewKOe1hMn41V8Q5W9diPwbb3oGcpCP+vao8MRsEGd2MQWdRmERJkaiD6AFyUweZHRrfY8usg9wXPTgpTO65NC+jNSrHDw271Ux3IEEgPGzC/w5HBpW0JAO7skGhaunf81vjsM6vEMejIPFhovUNiEVKNvxj730P6bcNctnKs2iBZmmpLPPXPX6pjaoSINVWmaxzF+ilhHRRMVyDDTbsuz8KxDQNPtkVI3V9wsxnvoAKrXb4W9+KlLPEe8Fdo3lXRAXmqpHufaZseW8AvybbwBzKPqnxw+qFvWrFjyq5v+2EklPz6Qe3ELF1bXTfgMa2BjXZbOIJeNHa3ySzyGfYhWrnjNLada48o/pFbEQ0WCU9DY2pEKQ/N+Rt4JSX3rNe1eR4mFgjG5wuak1hbGzhqTeY1Gbf8NX+xKnOPcgzBXZco9yWPRCyfbfMcCEcoI/H3WXlxLIuSClP4a6rsm1A0gQB4gDPT8XKRC0=
+  bucket: waldo-jobs
+  local-dir: cordova/platforms/ios/build
+  upload-dir: ios-build
+  acl: public_read
+  verbose: true
+  on:
+    branch: master
+    condition: $TRAVIS_OS_NAME = osx
+
+# deploy android app to master
+- skip_cleanup: true
+  provider: s3
+  access_key_id: AKIAI4WXR4PRA6AJKFYA
+  secret_access_key:
+    secure: Qy8wDoTUlm6AbI2cvgbqyJRLNDP7cmlF08xzHY3ZAOKRCf766u+KqyAPaXO1eeSmrQWCT7RJ1A3WJ5atZP+dGSH+2/u/dUwViZ66vYTv5rwpi1lFJvYcK29oRXtwkQS+dWc6OTVQGTkHBeX0bWBdzkpwJA5aPiTHLD61tait0FJ2jyaKRDhxKGC29Vm/s+fRdNBSNITNEewKOe1hMn41V8Q5W9diPwbb3oGcpCP+vao8MRsEGd2MQWdRmERJkaiD6AFyUweZHRrfY8usg9wXPTgpTO65NC+jNSrHDw271Ux3IEEgPGzC/w5HBpW0JAO7skGhaunf81vjsM6vEMejIPFhovUNiEVKNvxj730P6bcNctnKs2iBZmmpLPPXPX6pjaoSINVWmaxzF+ilhHRRMVyDDTbsuz8KxDQNPtkVI3V9wsxnvoAKrXb4W9+KlLPEe8Fdo3lXRAXmqpHufaZseW8AvybbwBzKPqnxw+qFvWrFjyq5v+2EklPz6Qe3ELF1bXTfgMa2BjXZbOIJeNHa3ySzyGfYhWrnjNLada48o/pFbEQ0WCU9DY2pEKQ/N+Rt4JSX3rNe1eR4mFgjG5wuak1hbGzhqTeY1Gbf8NX+xKnOPcgzBXZco9yWPRCyfbfMcCEcoI/H3WXlxLIuSClP4a6rsm1A0gQB4gDPT8XKRC0=
+  bucket: waldo-jobs
+  local-dir: cordova/platforms/android/build
+  upload-dir: android-build
+  acl: public_read
+  verbose: true
+  on:
+    branch: master
+    condition: $TRAVIS_OS_NAME = linux
 
 # deploy ember app to master
 - skip_cleanup: true
