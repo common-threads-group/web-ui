@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 ember cordova:prepare;
 
 pushd cordova;

@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 sudo ember cordova:prepare;
 
 cd cordova;
